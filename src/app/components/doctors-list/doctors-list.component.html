@@ -1,5 +1,16 @@
- <div *ngFor="let doctor of doctorsList" style="border: 1px solid black;">
-    <h1>{{doctor.firstName}}</h1>
-</div>
+<div class="doctor-list">
+    <h2>רשימת הרופאים</h2>
+    <ul>
+      <li *ngFor="let doctor of doctorsList">
+        <div class="doctor-details">
+          {{doctor | json}}
+          <button (click)="delete(doctor)">delete</button>
+          <button (click)="update(doctor)">update</button>
+          <!-- <button (click)="delete(doctor)"></button> -->
+        </div>
+      </li>
+    </ul>
+  </div>
+
 
 

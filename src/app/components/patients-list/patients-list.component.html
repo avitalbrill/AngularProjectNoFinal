@@ -1,3 +1,11 @@
-<div *ngFor="let patient of patientsList" style="border: 1px solid black;">
-    <h1>{{patient.firstName}}</h1>
-</div>
+<div class="patient-list">
+    <h2>רשימת הפציינטים</h2>
+    <ul>
+      <li *ngFor="let Patient of patientsList">
+        <div class="patient-details">
+          {{Patient | json}}
+          <!-- ניתן להוסיף עוד פרטים כרצונך -->
+        </div>
+      </li>
+    </ul>
+  </div>

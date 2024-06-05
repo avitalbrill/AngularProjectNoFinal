@@ -1,3 +1,11 @@
-<div *ngFor="let turn of turnsList" style="border: 1px solid black;">
-    <h1>{{turn.date}}</h1>
-</div>
+<div class="turn-list">
+    <h2>רשימת התורים</h2>
+    <ul>
+      <li *ngFor="let Turn of turnsList">
+        <div class="turn-details">
+          {{Turn | json}}
+          <!-- ניתן להוסיף עוד פרטים כרצונך -->
+        </div>
+      </li>
+    </ul>
+  </div>

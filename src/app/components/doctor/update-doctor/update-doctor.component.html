@@ -1,0 +1,84 @@
+<!-- <form #doctorForm="ngForm">
+    <div class="input">
+        
+        <input name="tz" #tzId="ngModel" type="number" [(ngModel)]="doctor.tz" required="true" minlength="9" maxlength="9" />
+        @if(tzId.errors){
+        @if(tzId.errors['required']){
+        <div>you must write the tz</div>
+        }
+        @else {
+        <div></div>
+        }
+        }
+    </div>
+    <div class="input">
+        <input name="firstName" #firstNameId="ngModel" type="text" [(ngModel)]="doctor.firstName" required="true" minlength="3" />
+        @if(firstNameId.errors){
+        @if(firstNameId.errors['required']){
+        <div>you must write the doctor name</div>
+        }
+        @else {
+        <div></div>
+        }
+        }
+    </div>
+    <div class="input">
+        <input name="lastName" #lastNameId="ngModel" type="text" [(ngModel)]="doctor.lastName" required="true" minlength="3" />
+        @if(firstNameId.errors){
+        @if(firstNameId.errors['required']){
+        <div>you must write the doctor name</div>
+        }
+        @else {
+        <div>0</div>
+        }
+        }
+    </div>
+
+    <div class="input">
+        <input #domainId="ngModel" name="domain" type="text" [(ngModel)]="doctor.domain" required="true" minlength="10" />
+        @if(domainId.errors){
+        @if(domainId.errors['required']){
+        <div>you must write the domain</div>
+        }
+        @else {
+        <div>you must write at least 10 chars</div>
+        }
+        }
+    </div>
+   
+</form>
+<button [disabled]="!doctorForm.valid" (click)="save()">save</button> -->
+
+
+<form [formGroup]="doctorForm" (ngSubmit)="save()">
+    <div class="input">
+      <input formControlName="tz" type="number" placeholder="TZ" />
+      <div *ngIf="doctorForm.get('tz')?.invalid && doctorForm.get('tz')?.touched">
+        <div *ngIf="doctorForm.get('tz')?.errors?.['required']">you must write the tz</div>
+        <div *ngIf="doctorForm.get('tz')?.errors?.['minlength'] || doctorForm.get('tz')?.errors?.['maxlength']">
+          TZ must be 9 digits long
+        </div>
+      </div>
+    </div>
+    <div class="input">
+      <input formControlName="firstName" type="text" placeholder="First Name" />
+      <div *ngIf="doctorForm.get('firstName')?.invalid && doctorForm.get('firstName')?.touched">
+        <div *ngIf="doctorForm.get('firstName')?.errors?.['required']">you must write the doctor name</div>
+      </div>
+    </div>
+    <div class="input">
+      <input formControlName="lastName" type="text" placeholder="Last Name" />
+      <div *ngIf="doctorForm.get('lastName')?.invalid && doctorForm.get('lastName')?.touched">
+        <div *ngIf="doctorForm.get('lastName')?.errors?.['required']">you must write the doctor name</div>
+      </div>
+    </div>
+    <div class="input">
+      <input formControlName="domain" type="text" placeholder="Domain" />
+      <div *ngIf="doctorForm.get('domain')?.invalid && doctorForm.get('domain')?.touched">
+        <div *ngIf="doctorForm.get('domain')?.errors?.['required']">you must write the domain</div>
+        <div *ngIf="doctorForm.get('domain')?.errors?.['minlength']">you must write at least 10 chars</div>
+      </div>
+    </div>
+    <button type="submit" [disabled]="doctorForm.invalid">Save</button>
+  </form>
+  
