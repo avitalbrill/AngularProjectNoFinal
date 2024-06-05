@@ -1,0 +1,14 @@
+.custom-button {
+    background-color: #add8e6; /* תכלת בהיר */
+    border: 2px solid white; /* מסגרת לבנה */
+    color: white; /* צבע טקסט לבן */
+    width: 100%; /* רוחב מלא */
+    height: 50px; /* גובה אחיד */
+    font-size: 16px; /* גודל טקסט אחיד */
+    text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5); /* צל עדין */
+  }
+  
+  .custom-button:hover {
+    background-color: #87ceeb; /* גוון כהה יותר כאשר מרחפים מעל הכפתור */
+  }
+  
