@@ -2,25 +2,38 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Turn } from '../../models/turn';
 import { TurnService } from '../../services/turn.service';
-import { RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-turns-list',
   standalone: true,
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule],
   templateUrl: './turns-list.component.html',
-  styleUrl: './turns-list.component.css'
+  styleUrls: ['./turns-list.component.css']
 })
-export class TurnsListComponent implements OnInit{
-  public turnsList!:Turn[];
+export class TurnsListComponent implements OnInit {
+  public turnsList: Turn[] = [];
 
-  constructor(private _turnService:TurnService){}
+  constructor(private turnService: TurnService, private router: Router) {}
+
   ngOnInit(): void {
-    this._turnService.getAllTurns().subscribe({
-      next:(res)=>{
-        this.turnsList=res;
-      }
-    })
+    this.loadTurns();
   }
 
+  loadTurns(): void {
+    this.turnService.getAllTurns().subscribe({
+      next: (turns) => {
+        this.turnsList = turns;
+      },
+      error: (err) => console.error('Error fetching turns', err)
+    });
+  }
+
+  delete(turn: Turn): void {
+    this.router.navigate(['/delete-turn', turn.id]);
+  }
+
+  update(turn: Turn): void {
+    this.router.navigate(['/update-turn', turn.id]);
+  }
 }

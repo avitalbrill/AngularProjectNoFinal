@@ -1,1 +1,32 @@
-<p>update-patient works!</p>
+<form [formGroup]="patientForm" (ngSubmit)="save()">
+    <div class="input">
+      <input formControlName="tz" type="number" placeholder="TZ" />
+      <div *ngIf="patientForm.get('tz')?.invalid && patientForm.get('tz')?.touched">
+        <div *ngIf="patientForm.get('tz')?.errors?.['required']">You must write the tz</div>
+        <div *ngIf="patientForm.get('tz')?.errors?.['minlength'] || patientForm.get('tz')?.errors?.['maxlength']">
+          TZ must be 9 digits long
+        </div>
+      </div>
+    </div>
+    <div class="input">
+      <input formControlName="firstName" type="text" placeholder="First Name" />
+      <div *ngIf="patientForm.get('firstName')?.invalid && patientForm.get('firstName')?.touched">
+        <div *ngIf="patientForm.get('firstName')?.errors?.['required']">You must write the patient name</div>
+      </div>
+    </div>
+    <div class="input">
+      <input formControlName="lastName" type="text" placeholder="Last Name" />
+      <div *ngIf="patientForm.get('lastName')?.invalid && patientForm.get('lastName')?.touched">
+        <div *ngIf="patientForm.get('lastName')?.errors?.['required']">You must write the patient name</div>
+      </div>
+    </div>
+    <div class="input">
+      <input formControlName="age" type="number" placeholder="Age" />
+      <div *ngIf="patientForm.get('age')?.invalid && patientForm.get('age')?.touched">
+        <div *ngIf="patientForm.get('age')?.errors?.['required']">You must write the age</div>
+        <div *ngIf="patientForm.get('age')?.errors?.['min']">Age must be a positive number</div>
+      </div>
+    </div>
+    <button type="submit" [disabled]="patientForm.invalid">Save</button>
+  </form>
+  

@@ -1,8 +1,7 @@
 .background-image {
-  background-image: url('../assets/5.jpg'); /* כתובת התמונה */
+  background-image: url('../assets/1.jpg'); /* כתובת התמונה */
   background-size: cover; /* מתאים את גודל התמונה לגודל האלמנט */
   background-repeat: no-repeat; /* מונע חזרה של התמונה */
   background-position: center; /* ממוקם את התמונה במרכז האלמנט */
   height: 100vh; /* גובה האלמנט יקבע גובה של 100% מהחלון */
 }
-  

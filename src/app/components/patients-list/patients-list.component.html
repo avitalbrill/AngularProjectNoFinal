@@ -1,11 +1,24 @@
 <div class="patient-list">
-    <h2>רשימת הפציינטים</h2>
-    <ul>
-      <li *ngFor="let Patient of patientsList">
-        <div class="patient-details">
-          {{Patient | json}}
-          <!-- ניתן להוסיף עוד פרטים כרצונך -->
-        </div>
-      </li>
-    </ul>
-  </div>
+  <h2>PatientsList</h2>
+  <table class="styled-table alt-table">
+    <thead>
+      <tr>
+        <th>tz</th>
+        <th>firstName</th>
+        <th>lastName</th>
+        <th>actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let patient of patientsList">
+        <td>{{ patient.tz }}</td>
+        <td>{{ patient.firstName }}</td>
+        <td>{{ patient.lastName }}</td>
+        <td>
+          <button (click)="delete(patient)">delete</button>
+          <button (click)="update(patient)">update</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

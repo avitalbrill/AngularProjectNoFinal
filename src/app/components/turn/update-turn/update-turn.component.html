@@ -1,1 +1,19 @@
-<p>update-turn works!</p>
+<form [formGroup]="turnForm" (ngSubmit)="save()">
+    <div class="input">
+      <input formControlName="date" type="date" placeholder="Date" />
+    </div>
+    <div class="input">
+      <input formControlName="hour" type="number" placeholder="Hour" />
+    </div>
+    <div class="input">
+      <input formControlName="treatmentDuration" type="number" placeholder="Treatment Duration" />
+    </div>
+    <div class="input">
+      <input formControlName="doctorId" type="number" placeholder="Doctor ID" />
+    </div>
+    <div class="input">
+      <input formControlName="patientId" type="number" placeholder="Patient ID" />
+    </div>
+    <button type="submit" [disabled]="turnForm.invalid">Save</button>
+  </form>
+  

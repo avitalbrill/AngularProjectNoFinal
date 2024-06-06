@@ -1,16 +1,26 @@
-<div class="doctor-list">
-    <h2>רשימת הרופאים</h2>
-    <ul>
-      <li *ngFor="let doctor of doctorsList">
-        <div class="doctor-details">
-          {{doctor | json}}
-          <button (click)="delete(doctor)">delete</button>
-          <button (click)="update(doctor)">update</button>
-          <!-- <button (click)="delete(doctor)"></button> -->
-        </div>
-      </li>
-    </ul>
+  <div class="doctor-list">
+    <h2>DoctorsList</h2>
+    <table class="styled-table alt-table">
+        <thead>
+            <tr>
+                <th>firstName</th>
+                <th>lastName</th>
+                <th>domain</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let doctor of doctorsList">
+                <td>{{ doctor.firstName }}</td>
+                <td>{{ doctor.lastName }}</td>
+                <td>{{ doctor.domain}}</td> 
+                <td>
+                <button (click)="delete(doctor)">delete</button>
+                <button (click)="update(doctor)">update</button>
+              </td>
+            </tr>
+        </tbody>
+    </table>
   </div>
-
 
 

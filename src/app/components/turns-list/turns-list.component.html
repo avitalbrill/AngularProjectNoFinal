@@ -1,11 +1,28 @@
 <div class="turn-list">
-    <h2>רשימת התורים</h2>
-    <ul>
-      <li *ngFor="let Turn of turnsList">
-        <div class="turn-details">
-          {{Turn | json}}
-          <!-- ניתן להוסיף עוד פרטים כרצונך -->
-        </div>
-      </li>
-    </ul>
-  </div>
+  <h2>TurnsList</h2>
+  <table class="styled-table alt-table">
+    <thead>
+      <tr>
+        <th>date</th>
+        <th>hour</th>
+        <th>treatmentDuration</th>
+        <th>actions</th>
+        <!-- <th>doctorId</th>
+        <th>patientId</th> -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let turn of turnsList">
+        <td>{{ turn.date | date: 'dd/MM/yyyy' }}</td>
+        <td>{{ turn.hour }}</td>
+        <td>{{ turn.treatmentDuration }}</td>
+        <!-- <td>{{ turn.doctorId }}</td>
+        <td>{{ turn.patientId }}</td> -->
+        <td>
+          <button (click)="delete(turn)">delete</button>
+          <button (click)="update(turn)">update</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
