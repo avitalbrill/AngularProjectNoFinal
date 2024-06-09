@@ -8,12 +8,13 @@ import { UpdateDoctorComponent } from './components/doctor/update-doctor/update-
 import { AddPatientComponent } from './components/patient/add-patient/add-patient.component';
 import { AddDoctorComponent } from './components/doctor/add-doctor/add-doctor.component';
 import { AddTurnComponent } from './components/turn/add-turn/add-turn.component';
+import { LogInComponent } from './log-in/log-in/log-in.component';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,CommonModule,RouterModule,HomePageComponent,MatSlideToggle,UpdateDoctorComponent,AddPatientComponent,AddDoctorComponent,AddTurnComponent],
+  imports: [RouterOutlet,CommonModule,RouterModule,HomePageComponent,MatSlideToggle,UpdateDoctorComponent,AddPatientComponent,AddDoctorComponent,AddTurnComponent,LogInComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

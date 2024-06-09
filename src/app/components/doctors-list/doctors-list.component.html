@@ -11,16 +11,21 @@
         </thead>
         <tbody>
             <tr *ngFor="let doctor of doctorsList">
-                <td>{{ doctor.firstName }}</td>
+                <td>{{ doctor.firstName | avital}}</td>
                 <td>{{ doctor.lastName }}</td>
                 <td>{{ doctor.domain}}</td> 
                 <td>
                 <button (click)="delete(doctor)">delete</button>
-                <button (click)="update(doctor)">update</button>
+                <button (click)="isClicked=!isClicked">update</button> 
+                <app-update-doctor *ngIf="isClicked" [id]="doctor.id" ></app-update-doctor>
               </td>
             </tr>
         </tbody>
     </table>
   </div>
+  <!-- <button (click)="this.isAdd=!this.isAdd">add product</button>
+  <app-add-doctor *ngIf="this.isAdd" [isAdd]="isAdd"></app-add-doctor>  -->
 
+
+  
 

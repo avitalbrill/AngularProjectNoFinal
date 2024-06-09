@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, output } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { DoctorService } from '../../../services/doctor.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
+import { EventEmitter } from 'stream';
 
 @Component({
   selector: 'app-add-doctor',
@@ -16,7 +17,8 @@ export class AddDoctorComponent implements OnInit {
   public addDoctor!: FormGroup;
 
   constructor(private doctorService: DoctorService, private route: Router, private snackBar: MatSnackBar) { }
-
+//  @Output()
+//   public onClick: EventEmitter<> = new EventEmitter<>()
   ngOnInit(): void {
     this.addDoctor = new FormGroup({
       'tz': new FormControl('', [Validators.required, Validators.maxLength(5)]),
@@ -28,6 +30,7 @@ export class AddDoctorComponent implements OnInit {
 
   public save(): void {
     if (this.addDoctor.valid) {
+      // this.onSaveEvent.emit(this.addForm.value)
       this.doctorService.addDoctor(this.addDoctor.value).subscribe(() => {
         this.openSnackBar('Doctor added successfully', 'Close');
       });

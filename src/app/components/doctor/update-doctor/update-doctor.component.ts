@@ -65,7 +65,7 @@
 
 
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { DoctorService } from '../../../services/doctor.service';
 import { Doctor } from '../../../models/doctor';
@@ -79,16 +79,18 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./update-doctor.component.css']
 })
 export class UpdateDoctorComponent implements OnInit {
-  private id!: number;
+  // private id!: number;
   public doctorForm!: FormGroup;
+  formVisible: boolean = true;
+  @Input() id!: number
 
   constructor(private route: ActivatedRoute, private doctorService: DoctorService) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe((param) => {
-      this.id = param['id'];
-      this.loadDoctorData(this.id);
-    });
+    // this.route.params.subscribe((param) => {
+    //   this.id = param['id'];
+    //   this.loadDoctorData(this.id);
+    // });
 
     this.doctorForm = new FormGroup({
       tz: new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
@@ -98,19 +100,19 @@ export class UpdateDoctorComponent implements OnInit {
     });
   }
 
-  loadDoctorData(id: number): void {
-    this.doctorService.getDoctorById(id).subscribe({
-      next: (res) => {
-        this.doctorForm.setValue({
-          tz: res.tz,
-          firstName: res.firstName,
-          lastName: res.lastName,
-          domain: res.domain
-        });
-      },
-      error: (err) => console.error(err)
-    });
-  }
+  // loadDoctorData(id: number): void {
+  //   this.doctorService.getDoctorById(id).subscribe({
+  //     next: (res) => {
+  //       this.doctorForm.setValue({
+  //         tz: res.tz,
+  //         firstName: res.firstName,
+  //         lastName: res.lastName,
+  //         domain: res.domain
+  //       });
+  //     },
+  //     error: (err) => console.error(err)
+  //   });
+  // }
 
   save(): void {
     if (this.doctorForm.valid) {
@@ -122,6 +124,18 @@ export class UpdateDoctorComponent implements OnInit {
         next: () => console.log('Doctor updated successfully'),
         error: (err) => console.error(err)
       });
+      this.reloadPage();
+
+      // נסגור את הטופס אחרי השמירה
+      this.closeForm();
     }
+  }
+  reloadPage() {
+    // פעולה לטעינת הדף מחדש
+    location.reload();
+  }
+
+  closeForm() {
+    this.formVisible = false;
   }
 }
