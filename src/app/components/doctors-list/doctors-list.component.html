@@ -1,31 +1,50 @@
   <div class="doctor-list">
-    <h2>DoctorsList</h2>
-    <table class="styled-table alt-table">
-        <thead>
-            <tr>
-                <th>firstName</th>
-                <th>lastName</th>
-                <th>domain</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let doctor of doctorsList">
-                <td>{{ doctor.firstName | avital}}</td>
-                <td>{{ doctor.lastName }}</td>
-                <td>{{ doctor.domain}}</td> 
-                <td>
-                <button (click)="delete(doctor)">delete</button>
-                <button (click)="isClicked=!isClicked">update</button> 
-                <app-update-doctor *ngIf="isClicked" [id]="doctor.id" ></app-update-doctor>
-              </td>
-            </tr>
-        </tbody>
+    <!-- כפתור להוספת רופא חדש -->
+    <button mat-raised-button color="primary" (click)="add=!add">
+      <mat-icon>add</mat-icon> Add Doctor
+    </button>
+    <app-add-doctor *ngIf="add"></app-add-doctor>
+  
+    <!-- טבלה עם רשימת הרופאים -->
+    <table mat-table [dataSource]="doctorsList" class="mat-elevation-z8">
+      <!-- עמודת שם פרטי -->
+      <ng-container matColumnDef="firstName">
+        <th mat-header-cell *matHeaderCellDef>First Name</th>
+        <td mat-cell *matCellDef="let doctor">{{ doctor.firstName | avital }}</td>
+      </ng-container>
+  
+      <!-- עמודת שם משפחה -->
+      <ng-container matColumnDef="lastName">
+        <th mat-header-cell *matHeaderCellDef>Last Name</th>
+        <td mat-cell *matCellDef="let doctor">{{ doctor.lastName }}</td>
+      </ng-container>
+  
+      <!-- עמודת תחום -->
+      <ng-container matColumnDef="domain">
+        <th mat-header-cell *matHeaderCellDef>Domain</th>
+        <td mat-cell *matCellDef="let doctor">{{ doctor.domain }}</td>
+      </ng-container>
+  
+      <!-- עמודת פעולות -->
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let doctor">
+          <!-- <button mat-icon-button color="accent" (click)="isClicked = !this.isClicked">
+            <mat-icon>edit</mat-icon>
+          </button> -->
+          <!-- @if(this.isClicked)
+          {    -->
+              <app-update-doctor [id]="this.doctor.id" (updateComplete)="o($event)"></app-update-doctor>
+          <!-- } -->
+          <button mat-icon-button color="warn" (click)="delete(doctor)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-  <!-- <button (click)="this.isAdd=!this.isAdd">add product</button>
-  <app-add-doctor *ngIf="this.isAdd" [isAdd]="isAdd"></app-add-doctor>  -->
-
-
   
 

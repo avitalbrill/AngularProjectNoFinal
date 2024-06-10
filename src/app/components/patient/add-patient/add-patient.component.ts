@@ -20,18 +20,18 @@ export class AddPatientComponent implements OnInit {
 
   ngOnInit(): void {
     //  this.route.navigate(['/add-patient'])
-     this.addPatient = new FormGroup({
+      this.addPatient = new FormGroup({
       'tz': new FormControl('', [Validators.required, Validators.maxLength(5)]),
       'firstName': new FormControl('', [Validators.required, Validators.maxLength(5)]),
       'lastName': new FormControl('', Validators.required),
-      'age': new FormControl(null, Validators.required)
+      'age': new FormControl('', Validators.required)
     });
   }
 
   public save(): void {
-    // this.patientService.addPatient(this.addPatient.value).subscribe();
       this.patientService.addPatient(this.addPatient.value).subscribe(() => {
         this.openSnackBar('Patient added successfully', 'Close');
+        location.reload();
       });
     }
     

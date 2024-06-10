@@ -1,31 +1,58 @@
 <form [formGroup]="addDoctor" class="doctor-form">
+  <div class="form-group">
+      <label for="tz">TZ:</label>
+      <input type="number" id="tz" formControlName="tz" class="form-control">
+      <div *ngIf="addDoctor.get('tz')?.invalid && addDoctor.get('tz')?.dirty" class="error-message">
+        <p>This field is required and must be a maximum of 5 characters.</p>
+      </div>
+  </div>
+  <div class="form-group">
+      <label for="firstName">First Name:</label>
+      <input type="text" id="firstName" formControlName="firstName" class="form-control">
+      <div *ngIf="addDoctor.get('firstName')?.invalid && addDoctor.get('firstName')?.dirty" class="error-message">
+        <p>This field is required and must be a maximum of 5 characters.</p>
+      </div>
+  </div>
+  <div class="form-group">
+      <label for="lastName">Last Name:</label>
+      <input type="text" id="lastName" formControlName="lastName" class="form-control">
+      <div *ngIf="addDoctor.get('lastName')?.invalid && addDoctor.get('lastName')?.dirty" class="error-message">
+        <p>This field is required.</p>
+      </div>
+  </div>
+  <div class="form-group">
+      <label for="domain">Domain:</label>
+      <input type="text" id="domain" formControlName="domain" class="form-control">
+      <div *ngIf="addDoctor.get('domain')?.invalid && addDoctor.get('domain')?.dirty" class="error-message">
+        <p>This field is required.</p>
+      </div>
+  </div>
+  <button (click)="save()" [disabled]="addDoctor.invalid" class="btn btn-primary">Save New Doctor</button>
+</form>
+
+<!-- The Modal -->
+<div id="myModal" class="modal" *ngIf="modalVisible">
+<!-- Modal content -->
+<div class="modal-content">
+  <span class="close-button" (click)="closeModal()">&times;</span>
+  <form [formGroup]="addDoctor" class="doctor-form">
     <div class="form-group">
-        <label for="tz">TZ:</label>
-        <input type="number" id="tz" formControlName="tz" class="form-control">
-        <div *NgIf="addDoctor.get('tz').invalid && addDoctor.get('tz').dirty" class="error-message">
-          <p>This field is required and must be a maximum of 5 characters.</p>
-        </div>
+      <label for="tz">TZ:</label>
+      <input type="number" id="tz" formControlName="tz" class="form-control">
     </div>
     <div class="form-group">
-        <label for="firstName">First Name:</label>
-        <input type="text" id="firstName" formControlName="firstName" class="form-control">
-        <div *NgIf="addDoctor.get('firstName').invalid && addDoctor.get('firstName').dirty" class="error-message">
-          <p>This field is required and must be a maximum of 5 characters.</p>
-        </div>
+      <label for="firstName">First Name:</label>
+      <input type="text" id="firstName" formControlName="firstName" class="form-control">
     </div>
     <div class="form-group">
-        <label for="lastName">Last Name:</label>
-        <input type="text" id="lastName" formControlName="lastName" class="form-control">
-        <div *NgIf="addDoctor.get('lastName').invalid && addDoctor.get('lastName').dirty" class="error-message">
-          <p>This field is required.</p>
-        </div>
+      <label for="lastName">Last Name:</label>
+      <input type="text" id="lastName" formControlName="lastName" class="form-control">
     </div>
     <div class="form-group">
-        <label for="domain">Domain:</label>
-        <input type="text" id="domain" formControlName="domain" class="form-control">
-        <div *NgIf="addDoctor.get('domain').invalid && addDoctor.get('domain').dirty" class="error-message">
-          <p>This field is required.</p>
-        </div>
+      <label for="domain">Domain:</label>
+      <input type="text" id="domain" formControlName="domain" class="form-control">
     </div>
     <button (click)="save()" [disabled]="addDoctor.invalid" class="btn btn-primary">Save New Doctor</button>
-</form>
+  </form>
+</div>
+</div>

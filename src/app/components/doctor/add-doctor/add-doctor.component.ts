@@ -15,6 +15,8 @@ import { EventEmitter } from 'stream';
 })
 export class AddDoctorComponent implements OnInit {
   public addDoctor!: FormGroup;
+  modalVisible: boolean = false;
+  existingDoctorData: any; // Assuming this holds existing doctor data
 
   constructor(private doctorService: DoctorService, private route: Router, private snackBar: MatSnackBar) { }
 //  @Output()
@@ -33,6 +35,7 @@ export class AddDoctorComponent implements OnInit {
       // this.onSaveEvent.emit(this.addForm.value)
       this.doctorService.addDoctor(this.addDoctor.value).subscribe(() => {
         this.openSnackBar('Doctor added successfully', 'Close');
+        location.reload();
       });
     }
   }
@@ -42,4 +45,19 @@ export class AddDoctorComponent implements OnInit {
       duration: 2000,
     });
   }
+  openModal() {
+    this.modalVisible = true;
+    // Initialize the modal form with existing doctor data
+    this.addDoctor.patchValue({
+      tz: this.existingDoctorData.tz,
+      firstName: this.existingDoctorData.firstName,
+      lastName: this.existingDoctorData.lastName,
+      domain: this.existingDoctorData.domain
+    });
+}
+
+closeModal() {
+    this.modalVisible = false;
+}
+
 }
