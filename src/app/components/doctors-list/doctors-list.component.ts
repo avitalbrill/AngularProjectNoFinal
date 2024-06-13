@@ -7,16 +7,17 @@ import { Router } from '@angular/router';
 import { DeleteDoctorComponent } from '../doctor/delete-doctor/delete-doctor.component';
 import { UpdateDoctorComponent } from '../doctor/update-doctor/update-doctor.component';
 import { AvitalPipe } from '../../avital.pipe';
-import { AddDoctorComponent } from '../doctor/add-doctor/add-doctor.component';
+
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSortModule } from '@angular/material/sort';
+import { AddDialogDoctorComponent } from '../doctor/add-dialog-doctor-component/add-dialog-doctor-component.component';
 
 @Component({
   selector: 'app-doctors-list',
   standalone: true,
-  imports: [CommonModule, RouterModule, DeleteDoctorComponent, UpdateDoctorComponent, AvitalPipe, AddDoctorComponent, MatTableModule, MatIconModule, MatButtonModule, MatSortModule],
+  imports: [CommonModule, RouterModule, DeleteDoctorComponent, UpdateDoctorComponent, AvitalPipe, MatTableModule, MatIconModule, MatButtonModule, MatSortModule,AddDialogDoctorComponent],
   templateUrl: './doctors-list.component.html',
   styleUrls: ['./doctors-list.component.css']
 })

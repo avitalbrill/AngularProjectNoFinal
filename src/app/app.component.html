@@ -1,8 +1,45 @@
 <app-home-page></app-home-page>
-<div class="background-image">
+<!-- <div class="background-image">
 <router-outlet></router-outlet>
+</div> -->
+<div class="background-image">
+<div *ngIf="isLoggedIn()">
+<router-outlet ></router-outlet>
+ </div>
+ <div *ngIf="!isLoggedIn()">
+    <app-log-in></app-log-in>
 </div>
-<!-- <app-add-doctor></app-add-doctor>
-<app-add-patient></app-add-patient>
-<app-add-turn></app-add-turn> -->
-<!-- <mat-slide-toggle></mat-slide-toggle> -->
+</div>
+<!-- Button to open the login dialog -->
+<button mat-raised-button color="primary" (click)="openLoginDialog()">
+    <mat-icon>login</mat-icon> Login
+  </button>
+  
+  <!-- Dialog content -->
+  <ng-template #loginDialog>
+    <h1 mat-dialog-title>Login</h1>
+    <div mat-dialog-content>
+      <form [formGroup]="this.formLogin">
+        <mat-form-field appearance="fill">
+          <mat-label>Password</mat-label>
+          <input matInput type="password" formControlName="password">
+          <mat-error *ngIf="formLogin.get('password')?.invalid && formLogin.get('password')?.dirty">
+            This field is required.
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field appearance="fill">
+          <mat-label>Username</mat-label>
+          <input matInput type="text" formControlName="username">
+          <mat-error *ngIf="formLogin.get('username')?.invalid && formLogin.get('username')?.dirty">
+            This field must be a 5 characters.
+          </mat-error>
+        </mat-form-field>
+      </form>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button (click)="onCancel()">Cancel</button>
+      <button mat-button [disabled]="formLogin.invalid" (click)="onSubmit()">Login</button>
+    </div>
+  </ng-template>
+  

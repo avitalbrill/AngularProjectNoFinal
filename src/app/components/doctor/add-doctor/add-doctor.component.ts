@@ -1,63 +1,90 @@
-import { Component, OnInit, Output, output } from '@angular/core';
-import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { DoctorService } from '../../../services/doctor.service';
-import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import {Component, Inject} from '@angular/core';
+import {
+  MatDialog,
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose,
+  
+} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
+import {FormControl, FormGroup, FormsModule, Validators} from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
-import { EventEmitter } from 'stream';
+import { Router } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DoctorService } from '../../../services/doctor.service';
+import { Doctor } from '../../../models/doctor';
+//import { DialogData } from '../update-doctor-dialog/update-doctor-dialog.component';
+
+
+
+export interface DialogData {
+  firstName: string;
+  lastName: string;
+  domain:string;
+  animal:string;
+}
 
 @Component({
-  selector: 'app-add-doctor',
+  selector: 'app-form-add',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    MatButtonModule,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+    ReactiveFormsModule
+  ],
+  // imports: [FormsModule,CommonModule,MatInputModule,MatFormFieldModule,MatDialogActions,MatDialogContent],
   templateUrl: './add-doctor.component.html',
-  styleUrls: ['./add-doctor.component.css']
+  styleUrl: './add-doctor.component.css'
 })
-export class AddDoctorComponent implements OnInit {
-  public addDoctor!: FormGroup;
-  modalVisible: boolean = false;
-  existingDoctorData: any; // Assuming this holds existing doctor data
 
-  constructor(private doctorService: DoctorService, private route: Router, private snackBar: MatSnackBar) { }
-//  @Output()
-//   public onClick: EventEmitter<> = new EventEmitter<>()
-  ngOnInit(): void {
-    this.addDoctor = new FormGroup({
-      'tz': new FormControl('', [Validators.required, Validators.maxLength(5)]),
-      'firstName': new FormControl('', [Validators.required, Validators.maxLength(5)]),
-      'lastName': new FormControl('', Validators.required),
-      'domain': new FormControl('', Validators.required)
-    });
+export class AddDoctorComponent {
+
+  public doctorForm!:FormGroup
+  doctor!:Doctor
+
+  constructor(
+    public dialogRef: MatDialogRef<AddDoctorComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+  private _doctorService:DoctorService,private route:Router) {}
+
+ 
+  onNoClick(): void {
+    this.dialogRef.close();this.route.navigate(['/doctors'])
+
   }
-
-  public save(): void {
-    if (this.addDoctor.valid) {
-      // this.onSaveEvent.emit(this.addForm.value)
-      this.doctorService.addDoctor(this.addDoctor.value).subscribe(() => {
-        this.openSnackBar('Doctor added successfully', 'Close');
-        location.reload();
+  ngOnInit():void{
+    // this.route.navigate(['/doctor/add'])
+    this.doctorForm=new FormGroup({
+      "firstName":new FormControl("",[Validators.required]),
+      "lastName":new FormControl("",[Validators.required]),
+      "domain":new FormControl("",[Validators.required]),
+    })
+  }
+  save() {
+    if (this.doctorForm.valid) {
+      this.doctor = this.doctorForm.value;
+      location.reload();
+      console.log("Form Data: ", this.doctorForm.value);
+      console.log("doctor",this.doctor);
+      
+      this._doctorService.addDoctor(this.doctor).subscribe({
+        next: (response) => {
+          console.log('Doctor saved successfully:', response);
+          this.route.navigate(['/doctors']);
+        },
+        
       });
-    }
-  }
-
-  openSnackBar(message: string, action: string) {
-    this.snackBar.open(message, action, {
-      duration: 2000,
-    });
-  }
-  openModal() {
-    this.modalVisible = true;
-    // Initialize the modal form with existing doctor data
-    this.addDoctor.patchValue({
-      tz: this.existingDoctorData.tz,
-      firstName: this.existingDoctorData.firstName,
-      lastName: this.existingDoctorData.lastName,
-      domain: this.existingDoctorData.domain
-    });
+    } 
 }
-
-closeModal() {
-    this.modalVisible = false;
-}
-
 }

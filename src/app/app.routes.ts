@@ -16,12 +16,14 @@ import { DeleteDoctorComponent } from './components/doctor/delete-doctor/delete-
 import { Doctor } from './models/doctor';
 import { UpdateDoctorComponent } from './components/doctor/update-doctor/update-doctor.component';
 import { AddPatientComponent } from './components/patient/add-patient/add-patient.component';
-import { AddDoctorComponent } from './components/doctor/add-doctor/add-doctor.component';
+
 import { AddTurnComponent } from './components/turn/add-turn/add-turn.component';
 import { DeletePatientComponent } from './components/patient/delete-patient/delete-patient.component';
 import { UpdatePatientComponent } from './components/patient/update-patient/update-patient.component';
 import { DeleteTurnComponent } from './components/turn/delete-turn/delete-turn.component';
 import { UpdateTurnComponent } from './components/turn/update-turn/update-turn.component';
+import { AddDialogDoctorComponent } from './components/doctor/add-dialog-doctor-component/add-dialog-doctor-component.component';
+import { AddDoctorComponent } from './components/doctor/add-doctor/add-doctor.component';
 
 
 export const routes:Routes=[

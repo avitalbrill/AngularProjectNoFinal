@@ -5,3 +5,15 @@
   background-position: center; /* ממוקם את התמונה במרכז האלמנט */
   height: 100vh; /* גובה האלמנט יקבע גובה של 100% מהחלון */
 }
+.mat-form-field {
+  width: 100%;
+}
+
+mat-dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+button {
+  margin: 0 8px;
+}

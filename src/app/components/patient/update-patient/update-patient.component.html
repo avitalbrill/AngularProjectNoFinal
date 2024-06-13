@@ -1,6 +1,11 @@
-<form [formGroup]="patientForm" (ngSubmit)="save()">
+<button mat-icon-button (click)="toggleForm()" class="icon-button">
+  <mat-icon>edit</mat-icon>
+</button>
+<div *ngIf="formVisible">
+  <form [formGroup]="patientForm" (ngSubmit)="save()">
     <div class="input">
-      <input formControlName="tz" type="number" placeholder="TZ" />
+      <label for="tz">TZ:</label>
+      <input id="tz" formControlName="tz" type="number" placeholder="TZ" />
       <div *ngIf="patientForm.get('tz')?.invalid && patientForm.get('tz')?.touched">
         <div *ngIf="patientForm.get('tz')?.errors?.['required']">You must write the tz</div>
         <div *ngIf="patientForm.get('tz')?.errors?.['minlength'] || patientForm.get('tz')?.errors?.['maxlength']">
@@ -9,24 +14,27 @@
       </div>
     </div>
     <div class="input">
-      <input formControlName="firstName" type="text" placeholder="First Name" />
+      <label for="firstName">First Name:</label>
+      <input id="firstName" formControlName="firstName" type="text" placeholder="First Name" />
       <div *ngIf="patientForm.get('firstName')?.invalid && patientForm.get('firstName')?.touched">
-        <div *ngIf="patientForm.get('firstName')?.errors?.['required']">You must write the patient name</div>
+        <div *ngIf="patientForm.get('firstName')?.errors?.['required']">You must write the doctor name</div>
       </div>
     </div>
     <div class="input">
-      <input formControlName="lastName" type="text" placeholder="Last Name" />
+      <label for="lastName">Last Name:</label>
+      <input id="lastName" formControlName="lastName" type="text" placeholder="Last Name" />
       <div *ngIf="patientForm.get('lastName')?.invalid && patientForm.get('lastName')?.touched">
-        <div *ngIf="patientForm.get('lastName')?.errors?.['required']">You must write the patient name</div>
+        <div *ngIf="patientForm.get('lastName')?.errors?.['required']">You must write the doctor name</div>
       </div>
     </div>
     <div class="input">
-      <input formControlName="age" type="number" placeholder="Age" />
+      <label for="age">Domain:</label>
+      <input id="age" formControlName="age" type="number" placeholder="age" />
       <div *ngIf="patientForm.get('age')?.invalid && patientForm.get('age')?.touched">
-        <div *ngIf="patientForm.get('age')?.errors?.['required']">You must write the age</div>
-        <div *ngIf="patientForm.get('age')?.errors?.['min']">Age must be a positive number</div>
+        <div *ngIf="patientForm.get('age')?.errors?.['required']">You must write the domain</div>
+        <div *ngIf="patientForm.get('age')?.errors?.['minlength']">You must write at least 10 chars</div>
       </div>
     </div>
     <button type="submit" [disabled]="patientForm.invalid">Save</button>
   </form>
-  
+</div>

@@ -1,41 +1,4 @@
-// import { CommonModule } from '@angular/common';
-// import { Component, OnInit } from '@angular/core';
-// import { Patient } from '../../models/patient';
-// import { PatientService } from '../../services/patient.service';
-// import { RouterModule } from '@angular/router';
-// import { Router } from '@angular/router';
 
-// @Component({
-//   selector: 'app-patients-list',
-//   standalone: true,
-//   imports: [CommonModule, RouterModule],
-//   templateUrl: './patients-list.component.html',
-//   styleUrls: ['./patients-list.component.css']
-// })
-// export class PatientsListComponent implements OnInit {
-//   public patientsList!: Patient[];
-
-//   constructor(private patientService: PatientService, private router: Router) {}
-
-//   ngOnInit(): void {
-//     this.patientService.getAllPatients().subscribe({
-//       next: (res) => {
-//         this.patientsList = res;
-//       },
-//       error: (err) => {
-//         console.error('Error fetching patients', err);
-//       }
-//     });
-//   }
-
-//   delete(patient: Patient): void {
-//     this.router.navigate(['/delete-patient', patient.id]);
-//   }
-
-//   update(patient: Patient): void {
-//     this.router.navigate(['/update-patient', patient.id]);
-//   }
-// }
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { PatientService } from '../../services/patient.service';
@@ -48,13 +11,14 @@ import { CommonModule } from '@angular/common';
 import { UpdatePatientComponent } from '../patient/update-patient/update-patient.component';
 import { AddPatientComponent } from '../patient/add-patient/add-patient.component';
 import { Route, Router } from '@angular/router';
+import { AddDialogPatientComponent } from '../patient/add-dialog-patient/add-dialog-patient.component';
 
 
 @Component({
   selector: 'app-patients-list',
   standalone: true,
   templateUrl: './patients-list.component.html',
-  imports: [CommonModule, MatTableModule, MatIconModule, MatButtonModule, MatSortModule,UpdatePatientComponent,AddPatientComponent],
+  imports: [CommonModule, MatTableModule, MatIconModule, MatButtonModule, MatSortModule,UpdatePatientComponent,AddPatientComponent,AddDialogPatientComponent,AddPatientComponent],
   styleUrls: ['./patients-list.component.css'],
 })
 export class PatientsListComponent implements OnInit {
@@ -83,10 +47,10 @@ export class PatientsListComponent implements OnInit {
       this._patientService.deletePatient(patient.id).subscribe({
         next: () => {
           this.patientsList = this.patientsList.filter(d => d.id !== patient.id);
-          console.log('Doctor deleted successfully');
+          console.log('Patient deleted successfully');
         },
         error: (err) => {
-          console.error('Failed to delete doctor:', err);
+          console.error('Failed to delete patient:', err);
         }
       });
     }

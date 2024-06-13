@@ -1,9 +1,10 @@
   <div class="doctor-list">
     <!-- כפתור להוספת רופא חדש -->
-    <button mat-raised-button color="primary" (click)="add=!add">
+    <!-- <button mat-raised-button color="primary" (click)="add=!add">
       <mat-icon>add</mat-icon> Add Doctor
     </button>
-    <app-add-doctor *ngIf="add"></app-add-doctor>
+    <app-add-doctor *ngIf="add"></app-add-doctor> -->
+<app-add-dialog-doctor-component></app-add-dialog-doctor-component>
   
     <!-- טבלה עם רשימת הרופאים -->
     <table mat-table [dataSource]="doctorsList" class="mat-elevation-z8">
