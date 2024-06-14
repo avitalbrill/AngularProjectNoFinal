@@ -23,8 +23,16 @@ form {
     border-radius: 5px;
     cursor: pointer;
   }
+
+  .icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
   
-  button:hover {
-    background-color: #0056b3;
+  .icon-button mat-icon {
+    font-size: 24px;
+    color: black; /* Adjust the color as needed */
   }
   

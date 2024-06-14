@@ -12,41 +12,69 @@ import { UpdatePatientComponent } from '../patient/update-patient/update-patient
 import { AddPatientComponent } from '../patient/add-patient/add-patient.component';
 import { Route, Router } from '@angular/router';
 import { AddDialogPatientComponent } from '../patient/add-dialog-patient/add-dialog-patient.component';
-
-
+import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'app-patients-list',
   standalone: true,
   templateUrl: './patients-list.component.html',
-  imports: [CommonModule, MatTableModule, MatIconModule, MatButtonModule, MatSortModule,UpdatePatientComponent,AddPatientComponent,AddDialogPatientComponent,AddPatientComponent],
+  imports: [CommonModule, MatTableModule, MatIconModule, MatButtonModule, MatSortModule,UpdatePatientComponent,AddPatientComponent,AddDialogPatientComponent,AddPatientComponent,ReactiveFormsModule,FormsModule,AddDialogPatientComponent,FormsModule,ReactiveFormsModule],
   styleUrls: ['./patients-list.component.css'],
 })
 export class PatientsListComponent implements OnInit {
-  public patientsList: Patient[] = [];
-  public displayedColumns: string[] = ['tz', 'firstName', 'lastName', 'actions'];
-  public add:boolean= false;
-  public isClicked = false;
+  public patientList: Patient[] = [];
+  public displayedColumns: string[] = ['id','firstName', 'lastName', 'age', 'actions'];
+  public add: boolean = false;
+  public search: string = "";
+  public filteredPatients: Patient[] = [];
 
-  constructor(private _patientService: PatientService,private router:Router) {}
- 
-  ngOnInit() {
-    this._patientService.getAllPatients().subscribe({
+  constructor(private patientService: PatientService,private router:Router) {}
+
+  ngOnInit(): void {
+    this.loadPatients();
+  }
+
+  loadPatients(): void {
+    this.patientService.getAllPatients().subscribe({
       next: (res) => {
-        this.patientsList = res;
+        this.patientList = res;
+        this.filteredPatients = res; // Initialize filtered list
       },
       error: (err) => {
-        console.error('Error fetching patients', err);
+        console.error('Failed to fetch patients:', err);
       }
     });
   }
 
+  filterPatients(): void {
+    const lowerCaseSearch = this.search.toLowerCase();
+    this.filteredPatients = this.patientList.filter(patient =>
+      patient.firstName.toLowerCase().includes(lowerCaseSearch) ||
+      patient.lastName.toLowerCase().includes(lowerCaseSearch)
+    );
+  }
 
-  delete(patient: Patient) {
+  saveEditPatient(patient: Patient): void {
+    this.patientService.updatePatient(patient.id!, patient).subscribe({
+      next: () => {
+        console.log("Patient updated successfully");
+        this.loadPatients();
+      },
+      error: (err) => {
+        console.error('Failed to update patient:', err);
+      }
+    });
+  }
+  navigateToDeletePatient(id:number){
+    this.router.navigate([`/delete/${id}`])
+  }
+
+  deletePatient(patient: Patient): void {
     const confirmation = confirm(`Are you sure you want to delete ${patient.firstName} ${patient.lastName}?`);
     if (confirmation) {
-      this._patientService.deletePatient(patient.id).subscribe({
+      this.patientService.deletePatient(patient.id!).subscribe({
         next: () => {
-          this.patientsList = this.patientsList.filter(d => d.id !== patient.id);
+          this.patientList = this.patientList.filter(d => d.id !== patient.id);
+          this.filteredPatients = this.filteredPatients.filter(d => d.id !== patient.id);
           console.log('Patient deleted successfully');
         },
         error: (err) => {
@@ -54,18 +82,6 @@ export class PatientsListComponent implements OnInit {
         }
       });
     }
-  }
-
-
-  saveEditPatient(patient: Patient) {
-    this._patientService.updatePatient(patient.id, patient).subscribe({
-      next: () => console.log('Patient updated successfully'),
-      error: (err) => console.error('Failed to update patient:', err)
-    });
-  }
-
-  updatePatient(patient: Patient) {
-    this.router.navigate(['/update-patient', patient.id]);
   }
 }
 

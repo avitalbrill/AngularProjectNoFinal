@@ -67,7 +67,7 @@ export class UpdateDoctorComponent implements OnInit {
           this.updateComplete.emit();
           this.doctorForm.reset(); // Clear the form after saving
           this.formVisible = false; // Close the form after saving
-          this.reloadPage(); // Reload the page to see the updated results
+          // this.reloadPage(); // Reload the page to see the updated results
         },
         error: (err) => console.error(err)
       });
@@ -76,6 +76,6 @@ export class UpdateDoctorComponent implements OnInit {
 
   reloadPage() {
     // פעולה לטעינת הדף מחדש
-    location.reload();
+  //   location.reload();
   }
 }

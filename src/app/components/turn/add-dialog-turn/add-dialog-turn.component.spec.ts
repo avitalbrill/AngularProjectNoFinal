@@ -1,17 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { LogInComponent } from './log-in.component';
 
-describe('LogInComponent', () => {
-  let component: LogInComponent;
-  let fixture: ComponentFixture<LogInComponent>;
+import { AddDialogTurnComponent } from './add-dialog-turn.component';
+
+describe('AddDialogTurnComponent', () => {
+  let component: AddDialogTurnComponent;
+  let fixture: ComponentFixture<AddDialogTurnComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LogInComponent]
+      imports: [AddDialogTurnComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(LogInComponent);
+    fixture = TestBed.createComponent(AddDialogTurnComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

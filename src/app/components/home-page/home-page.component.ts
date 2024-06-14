@@ -12,39 +12,9 @@ import { PatientsListComponent } from '../patients-list/patients-list.component'
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [CommonModule,TurnsListComponent,DoctorsListComponent,PatientsListComponent,MatToolbar,RouterLink,MatTabsModule],
+  imports: [CommonModule,MatToolbar,RouterLink],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css'
 })
 export class HomePageComponent {
-  showDoctorsList=false;
-  showPatientsList=false;
-  showTurnsList=false;
-  constructor() { }
-  showOrNotDoctors():void{
-    this.showDoctorsList=!this.showDoctorsList;
-  }
-  showOrNotPatients():void{
-    this.showPatientsList=!this.showPatientsList
-  }
-  showOrNotTurns():void{
-    this.showTurnsList=!this.showTurnsList;
-  }
-
-  isListOpen: { [key: string]: boolean } = {
-    doctors: false,
-    patients: false,
-    turns: false
-  };
-
-  toggleList(list: string) {
-    // אם הרשימה פתוחה, סגור אותה, אחרת פתח אותה
-    this.isListOpen[list] = !this.isListOpen[list];
-    // עכשיו נסגור את שאר הרשימות
-    for (const key in this.isListOpen) {
-      if (key !== list) {
-        this.isListOpen[key] = false;
-      }
-    }
-  }
 }

@@ -21,7 +21,8 @@ export class UpdatePatientComponent implements OnInit {
   public patientForm!: FormGroup;
   formVisible: boolean = false; // Initial state set to false
   @Input() id!: number;
-  @Output() updateComplete: EventEmitter<any> = new EventEmitter<any>();
+  @Input() patient!: Patient;
+  @Output() patientSave: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private route: ActivatedRoute, private patientService: PatientService) {}
 
@@ -64,10 +65,10 @@ export class UpdatePatientComponent implements OnInit {
       this.patientService.updatePatient(this.id, updatePatient).subscribe({
         next: () => {
           console.log('Patient updated successfully');
-          this.updateComplete.emit();
+          this.patientSave.emit();
           this.patientForm.reset(); // Clear the form after saving
           this.formVisible = false; // Close the form after saving
-          this.reloadPage(); // Reload the page to see the updated results
+          // this.reloadPage(); // Reload the page to see the updated results
         },
         error: (err) => console.error(err)
       });
@@ -76,6 +77,6 @@ export class UpdatePatientComponent implements OnInit {
 
   reloadPage() {
     // פעולה לטעינת הדף מחדש
-    location.reload();
+    // location.reload();
   }
 }

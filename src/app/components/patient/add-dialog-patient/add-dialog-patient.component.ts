@@ -39,14 +39,13 @@ export class AddDialogPatientComponent {
 
   firstName!: string;
   lastName!: string;
-  domain!:string;
+  age!:string;
   animal!:string
   constructor(public dialog: MatDialog,private route:Router) {}
 
   openDialog(): void {
-    // this.route.navigate(['add-doctor'])
     const dialogRef = this.dialog.open(AddPatientComponent, {
-      data: {animal:this.animal,firstName: this.firstName, lastName: this.lastName,domain:this.domain},
+      data: {animal:this.animal,firstName: this.firstName, lastName: this.lastName,age:this.age},
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -75,17 +75,14 @@ export class AddPatientComponent {
   save() {
     if (this.patientForm.valid) {
       this.patient = this.patientForm.value;
-      location.reload();
       console.log("Form Data: ", this.patientForm.value);
       console.log("patient",this.patient);
-      
       this._patientService.addPatient(this.patient).subscribe({
         next: (response) => {
           console.log('Patient saved successfully:', response);
           this.route.navigate(['/patients']);
         },
-        
       });
     } 
-}
+  }
 }

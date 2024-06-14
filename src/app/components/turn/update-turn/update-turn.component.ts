@@ -1,63 +1,117 @@
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TurnService } from '../../../services/turn.service';
+import { MatIconModule } from '@angular/material/icon';
 import { Turn } from '../../../models/turn';
-import { ActivatedRoute } from '@angular/router';
+import { Doctor } from '../../../models/doctor';
+import { Patient } from '../../../models/patient';
+import { DoctorService } from '../../../services/doctor.service';
+import { PatientService } from '../../../services/patient.service';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
+import { MatButtonModule } from '@angular/material/button';
+import { log } from 'console';
 
 @Component({
   selector: 'app-update-turn',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule, MatIconModule,MatSelectModule,MatOptionModule,MatButtonModule],
   templateUrl: './update-turn.component.html',
   styleUrls: ['./update-turn.component.css']
 })
 export class UpdateTurnComponent implements OnInit {
-  private id!: number;
+  update: boolean = false;
+  doctorList: Doctor[] = [];
+  filteredDoctors: Doctor[] = [];
+  patientList: Patient[] = [];
+  filteredPatients: Patient[] = [];
+  doctorFilter: string = '';
+  patientFilter: string = '';
   public turnForm!: FormGroup;
+  @Input() public turn!: Turn;
+  @Output() public turnSave: EventEmitter<Turn> = new EventEmitter<Turn>();
 
-  constructor(private route: ActivatedRoute, private turnService: TurnService) {}
+  constructor(
+    private router: Router,
+    private snackBar: MatSnackBar,
+    private doctorService: DoctorService,
+    private patientService: PatientService
+  ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe((param) => {
-      this.id = param['id'];
-      this.loadTurnData(this.id);
-    });
+    this.loadDoctors();
+    this.loadPatients();
 
     this.turnForm = new FormGroup({
-      date: new FormControl('', Validators.required),
-      hour: new FormControl('', Validators.required),
-      treatmentDuration: new FormControl('', Validators.required),
-      doctorId: new FormControl('', Validators.required),
-      patientId: new FormControl('', Validators.required)
+      'date': new FormControl(this.turn?.date, [Validators.required, Validators.maxLength(50)]),
+      'hour': new FormControl(this.turn?.hour, Validators.required),
+      'treatmentDuration': new FormControl(this.turn?.treatmentDuration, Validators.required),
+      'doctorId': new FormControl(this.turn?.doctorId, Validators.required),
+      'patientId': new FormControl(this.turn?.patientId, Validators.required)
     });
   }
 
-  loadTurnData(id: number): void {
-    this.turnService.getTurnById(id).subscribe({
+  loadDoctors(): void {
+    this.doctorService.getAllDoctors().subscribe({
       next: (res) => {
-        this.turnForm.setValue({
-          date: res.date,
-          hour: res.hour,
-          treatmentDuration: res.treatmentDuration,
-          doctorId: res.doctorId,
-          patientId: res.patientId
-        });
+        this.doctorList = res;
+        this.filteredDoctors = this.doctorList;
       },
-      error: (err) => console.error(err)
+      error: (err) => {
+        console.error('Failed to fetch doctors:', err);
+      }
     });
   }
 
-  save(): void {
+  loadPatients(): void {
+    this.patientService.getAllPatients().subscribe({
+      next: (res) => {
+        this.patientList = res;
+        this.filteredPatients = this.patientList;
+      },
+      error: (err) => {
+        console.error('Failed to fetch patients:', err);
+      }
+    });
+  }
+
+  filterDoctors(filterValue: string): void {
+    this.filteredDoctors = this.doctorList.filter(doctor =>
+      doctor.firstName.toLowerCase().includes(filterValue.toLowerCase()) ||
+      doctor.lastName.toLowerCase().includes(filterValue.toLowerCase())
+    );
+  }
+
+  filterPatients(filterValue: string): void {
+    this.filteredPatients = this.patientList.filter(patient =>
+      patient.firstName.toLowerCase().includes(filterValue.toLowerCase()) ||
+      patient.lastName.toLowerCase().includes(filterValue.toLowerCase())
+    );
+  }
+
+  updateClick() {
+    console.log("updateClick",this.turnForm.value);
+    
     if (this.turnForm.valid) {
-      const updatedTurn: Turn = {
-        id: this.id,
+      const updatedTurn = {
+        ...this.turn,
         ...this.turnForm.value
       };
-      this.turnService.updateTurn(this.id, updatedTurn).subscribe({
-        next: () => console.log('Turn updated successfully'),
-        error: (err) => console.error(err)
-      });
+      console.log("updateClick2",updatedTurn);
+
+      this.turnSave.emit(updatedTurn);
+      // this.snackBar.open('Turn updated successfully!', 'Close', { duration: 2000 });
     }
+  }
+
+  edit() {
+    console.log("update1",this.update);
+    
+    this.update = !this.update;
+    // this.router.navigate(['/turn/update',this.turn.id])
+    console.log("update2",this.update);
+
   }
 }

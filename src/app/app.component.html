@@ -1,45 +1,20 @@
-<app-home-page></app-home-page>
-<!-- <div class="background-image">
-<router-outlet></router-outlet>
-</div> -->
 <div class="background-image">
-<div *ngIf="isLoggedIn()">
-<router-outlet ></router-outlet>
- </div>
- <div *ngIf="!isLoggedIn()">
-    <app-log-in></app-log-in>
-</div>
-</div>
-<!-- Button to open the login dialog -->
-<button mat-raised-button color="primary" (click)="openLoginDialog()">
-    <mat-icon>login</mat-icon> Login
-  </button>
-  
-  <!-- Dialog content -->
-  <ng-template #loginDialog>
-    <h1 mat-dialog-title>Login</h1>
-    <div mat-dialog-content>
-      <form [formGroup]="this.formLogin">
-        <mat-form-field appearance="fill">
-          <mat-label>Password</mat-label>
-          <input matInput type="password" formControlName="password">
-          <mat-error *ngIf="formLogin.get('password')?.invalid && formLogin.get('password')?.dirty">
-            This field is required.
-          </mat-error>
-        </mat-form-field>
-  
-        <mat-form-field appearance="fill">
-          <mat-label>Username</mat-label>
-          <input matInput type="text" formControlName="username">
-          <mat-error *ngIf="formLogin.get('username')?.invalid && formLogin.get('username')?.dirty">
-            This field must be a 5 characters.
-          </mat-error>
-        </mat-form-field>
-      </form>
+  <div *ngIf="!clicked" class="container">
+    <mat-icon 
+      class="circle-icon" 
+      aria-hidden="false" 
+      aria-label="Example home icon" 
+      (click)="clicked=!clicked" 
+      fontIcon="home">
+    </mat-icon>
+  </div>
+  <div *ngIf="clicked" class="main-content" [ngClass]="{'login-background': !isLoggedIn()}">
+    <div *ngIf="isLoggedIn()">
+      <app-home-page></app-home-page>
+      <router-outlet></router-outlet>
     </div>
-    <div mat-dialog-actions>
-      <button mat-button (click)="onCancel()">Cancel</button>
-      <button mat-button [disabled]="formLogin.invalid" (click)="onSubmit()">Login</button>
+    <div *ngIf="!isLoggedIn()" class="login-container">
+      <app-log-in></app-log-in>
     </div>
-  </ng-template>
-  
+  </div>
+</div>

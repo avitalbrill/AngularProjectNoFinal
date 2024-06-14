@@ -1,49 +1,46 @@
+<div class="search-container">
+    <!-- <label for="search">Search:</label> -->
+    <div class="search-input">
+      <mat-icon>search</mat-icon>
+      <input appClearInput type="text" id="search" [(ngModel)]="search" (input)="filterPatients()" placeholder="Type a name..." >
+    </div>
+  </div>
 <div class="patient-list">
+    <app-add-dialog-patient></app-add-dialog-patient>
+    <div class="table-container">
+      <table mat-table [dataSource]="filteredPatients" class="mat-elevation-z8">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef> Id </th>
+          <td mat-cell *matCellDef="let patient"> {{ patient.id }} </td>
+        </ng-container>
 
-  <!-- <button mat-raised-button color="primary" (click)="this.add=!this.add">
-      <mat-icon>add</mat-icon> Add Patient
-  </button>
-  @if(add){
-    <app-add-patient></app-add-patient>
-  } -->
- <app-add-dialog-patient></app-add-dialog-patient>
-
-
-  <!-- טבלה עם רשימת הפציינטים -->
-  <table mat-table [dataSource]="patientsList" class="mat-elevation-z8">
-      <!-- עמודת תז -->
-      <ng-container matColumnDef="tz">
-          <th mat-header-cell *matHeaderCellDef>TZ</th>
-          <td mat-cell *matCellDef="let patient">{{ patient.tz }}</td>
-      </ng-container>
-
-      <!-- עמודת שם פרטי -->
-      <ng-container matColumnDef="firstName">
-          <th mat-header-cell *matHeaderCellDef>First Name</th>
-          <td mat-cell *matCellDef="let patient">{{ patient.firstName }}</td>
-      </ng-container>
-
-      <!-- עמודת שם משפחה -->
-      <ng-container matColumnDef="lastName">
-          <th mat-header-cell *matHeaderCellDef>Last Name</th>
-          <td mat-cell *matCellDef="let patient">{{ patient.lastName }}</td>
-      </ng-container>
-
-      <!-- עמודת פעולות -->
-      <ng-container matColumnDef="actions">
-          <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <ng-container matColumnDef="firstName">
+          <th mat-header-cell *matHeaderCellDef> First Name </th>
+          <td mat-cell *matCellDef="let patient"> {{ patient.firstName }} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="lastName">
+          <th mat-header-cell *matHeaderCellDef> Last Name </th>
+          <td mat-cell *matCellDef="let patient"> {{ patient.lastName }} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="age">
+          <th mat-header-cell *matHeaderCellDef> Age </th>
+          <td mat-cell *matCellDef="let patient"> {{ patient.age }} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
           <td mat-cell *matCellDef="let patient">
-              <!-- <button mat-icon-button color="accent" (click)="isClicked = !isClicked">
-                  <mat-icon>edit</mat-icon>
-              </button> -->
-              <app-update-patient [id]="patient.id"></app-update-patient>
-              <button mat-icon-button color="warn" (click)="delete(patient)">
-                  <mat-icon>delete</mat-icon>
-              </button>
+            <app-update-patient [patient]="patient" (patientSave)="saveEditPatient($event)"></app-update-patient>
+            <button mat-icon-button color="warn" (click)="navigateToDeletePatient(patient.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
           </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
-</div>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>

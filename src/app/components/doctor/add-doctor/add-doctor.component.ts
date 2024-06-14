@@ -74,7 +74,7 @@ export class AddDoctorComponent {
   save() {
     if (this.doctorForm.valid) {
       this.doctor = this.doctorForm.value;
-      location.reload();
+      // location.reload();
       console.log("Form Data: ", this.doctorForm.value);
       console.log("doctor",this.doctor);
       

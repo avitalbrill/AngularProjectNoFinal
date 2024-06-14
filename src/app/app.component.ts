@@ -9,13 +9,13 @@ import { AddPatientComponent } from './components/patient/add-patient/add-patien
 import { AddDoctorComponent } from './components/doctor/add-doctor/add-doctor.component';
 import { AddTurnComponent } from './components/turn/add-turn/add-turn.component';
 import { AuthService } from './services/auth.service';
-import { LogInComponent } from './components/log-in/log-in.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LogInComponent } from './components/log-in/log-in.component';
 
 
 
@@ -28,40 +28,16 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    ReactiveFormsModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'clinic-project';
-  public formLogin!: FormGroup;
-  @ViewChild('loginDialog') loginDialog!: TemplateRef<any>;
-  constructor(private authService:AuthService,private fb: FormBuilder, private dialog: MatDialog) {
-    this.formLogin = this.fb.group({
-      password: ['', Validators.required],
-      username: ['', [Validators.required, Validators.maxLength(5), Validators.minLength(5)]]
-    });
-  }
+   formLogin!: FormGroup;
+  clicked:boolean=false;
+  constructor(private authService:AuthService ){}
   isLoggedIn() {
     return this.authService.isLoggedIn2();
-  }
-
-  openLoginDialog() {
-    this.dialog.open(this.loginDialog, {
-      width: '400px'
-    });
-  }
-
-  onSubmit() {
-    if (this.formLogin.valid) {
-      // Handle the login logic here
-      console.log('Login Successful');
-      this.dialog.closeAll();
-    }
-  }
-
-  onCancel() {
-    this.dialog.closeAll();
   }
 }

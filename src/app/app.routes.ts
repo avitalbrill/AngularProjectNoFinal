@@ -40,7 +40,7 @@ export const routes:Routes=[
     { path: 'add-doctor' ,component:AddDoctorComponent}, 
     { path: 'add-turn' ,component:AddTurnComponent}, 
     { path: '', redirectTo: 'stam', pathMatch: 'full' },
-    
+    { path: 'homepage' ,component:HomePageComponent}, 
 
    
 ];
