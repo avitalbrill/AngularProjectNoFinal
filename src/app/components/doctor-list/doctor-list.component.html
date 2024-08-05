@@ -1,46 +1,41 @@
-  <div class="doctor-list">
-   <app-add-dialog-doctor-component></app-add-dialog-doctor-component>
-  
-    <!-- טבלה עם רשימת הרופאים -->
-    <table mat-table [dataSource]="doctorsList" class="mat-elevation-z8">
-      <!-- עמודת שם פרטי -->
+<div class="doctor-list">
+  <app-add-dialog-doctor-component></app-add-dialog-doctor-component>
+
+  <div class="table-container">
+    <table mat-table [dataSource]="doctorList" class="mat-elevation-z8">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>Id</th>
+        <td mat-cell *matCellDef="let doctor">{{ doctor.id }}</td>
+      </ng-container>
+
       <ng-container matColumnDef="firstName">
         <th mat-header-cell *matHeaderCellDef>First Name</th>
-        <td mat-cell *matCellDef="let doctor">{{ doctor.firstName | avital }}</td>
+        <td mat-cell *matCellDef="let doctor">{{ doctor.firstName }}</td>
       </ng-container>
-  
-      <!-- עמודת שם משפחה -->
+
       <ng-container matColumnDef="lastName">
         <th mat-header-cell *matHeaderCellDef>Last Name</th>
         <td mat-cell *matCellDef="let doctor">{{ doctor.lastName }}</td>
       </ng-container>
-  
-      <!-- עמודת תחום -->
+
       <ng-container matColumnDef="domain">
         <th mat-header-cell *matHeaderCellDef>Domain</th>
         <td mat-cell *matCellDef="let doctor">{{ doctor.domain }}</td>
       </ng-container>
-  
-      <!-- עמודת פעולות -->
+
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let doctor">
-          <!-- <button mat-icon-button color="accent" (click)="isClicked = !this.isClicked">
-            <mat-icon>edit</mat-icon>
-          </button> -->
-          <!-- @if(this.isClicked)
-          {    -->
-              <app-update-doctor [id]="this.doctor.id" (updateComplete)="o($event)"></app-update-doctor>
-          <!-- } -->
-          <button mat-icon-button color="warn" (click)="delete(doctor)">
+          <app-update-doctor [doctor]="doctor" (doctorSave)="saveEditDoctor($event)"></app-update-doctor>
+          <button mat-icon-button color="warn" (click)="deleteDoctor(doctor)">
             <mat-icon>delete</mat-icon>
           </button>
         </td>
       </ng-container>
-  
+
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
   </div>
-  
-
+</div>

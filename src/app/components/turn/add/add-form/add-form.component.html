@@ -1,0 +1,63 @@
+<mat-dialog-content>
+    <form [formGroup]="turnForm">
+      <mat-form-field appearance="fill">
+        <mat-label>Date</mat-label>
+        <input matInput formControlName="date" type="date">
+        <mat-error *ngIf="turnForm.get('date')?.hasError('required')">
+          Date is required.
+        </mat-error>
+        <mat-error *ngIf="turnForm.get('date')?.hasError('invalidDate')">
+          Date must be today or later.
+        </mat-error>
+      </mat-form-field><br>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Hour</mat-label>
+        <input matInput formControlName="hour" type="number">
+        <mat-error *ngIf="turnForm.get('hour')?.hasError('required')">
+          Hour is required.
+        </mat-error>
+        <mat-error *ngIf="turnForm.get('hour')?.hasError('min')">
+          Hour must be at least 8.
+        </mat-error>
+        <mat-error *ngIf="turnForm.get('hour')?.hasError('max')">
+          Hour must be at most 22.
+        </mat-error>
+      </mat-form-field><br>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Treatment Duration</mat-label>
+        <input matInput formControlName="treatmentDuration" type="number">
+        <mat-error *ngIf="turnForm.get('treatmentDuration')?.hasError('required')">
+          Treatment Duration is required.
+        </mat-error>
+      </mat-form-field><br>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Doctor Id</mat-label>
+        <input matInput formControlName="doctorId" type="number">
+        <mat-error *ngIf="turnForm.get('doctorId')?.hasError('required')">
+          Doctor Id is required.
+        </mat-error>
+        <mat-error *ngIf="turnForm.get('doctorId')?.hasError('invalidDoctorId')">
+          Invalid Doctor Id. Please select a doctor from the list.
+        </mat-error>
+      </mat-form-field><br>
+  
+      <mat-form-field appearance="fill">
+        <mat-label>Patient Id</mat-label>
+        <input matInput formControlName="patientId" type="number">
+        <mat-error *ngIf="turnForm.get('patientId')?.hasError('required')">
+          Patient Id is required.
+        </mat-error>
+        <mat-error *ngIf="turnForm.get('patientId')?.hasError('invalidPatientId')">
+          Invalid Patient Id. Please select a patient from the list.
+        </mat-error>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button (click)="onNoClick()" color="warn">No Thanks</button>
+    <button mat-button (click)="save()" [disabled]="turnForm.invalid" color="primary">Ok</button>
+  </mat-dialog-actions>
+  

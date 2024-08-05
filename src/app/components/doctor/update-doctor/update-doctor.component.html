@@ -4,36 +4,27 @@
 
 <div *ngIf="formVisible">
   <form [formGroup]="doctorForm" (ngSubmit)="save()">
+   
     <div class="input">
-      <label for="tz">TZ:</label>
-      <input id="tz" formControlName="tz" type="number" placeholder="TZ" />
-      <div *ngIf="doctorForm.get('tz')?.invalid && doctorForm.get('tz')?.touched">
-        <div *ngIf="doctorForm.get('tz')?.errors?.['required']">You must write the tz</div>
-        <div *ngIf="doctorForm.get('tz')?.errors?.['minlength'] || doctorForm.get('tz')?.errors?.['maxlength']">
-          TZ must be 9 digits long
-        </div>
-      </div>
-    </div>
-    <div class="input">
-      <label for="firstName">First Name:</label>
+      <label for="firstName">first name:</label>
       <input id="firstName" formControlName="firstName" type="text" placeholder="First Name" />
       <div *ngIf="doctorForm.get('firstName')?.invalid && doctorForm.get('firstName')?.touched">
         <div *ngIf="doctorForm.get('firstName')?.errors?.['required']">You must write the doctor name</div>
       </div>
     </div>
     <div class="input">
-      <label for="lastName">Last Name:</label>
+      <label for="lastName">last name:</label>
       <input id="lastName" formControlName="lastName" type="text" placeholder="Last Name" />
       <div *ngIf="doctorForm.get('lastName')?.invalid && doctorForm.get('lastName')?.touched">
-        <div *ngIf="doctorForm.get('lastName')?.errors?.['required']">You must write the doctor name</div>
+        <div *ngIf="doctorForm.get('lastName')?.errors?.['required']">You must write the doctor last name</div>
       </div>
     </div>
     <div class="input">
-      <label for="domain">Domain:</label>
+      <label for="domain">domain:</label>
       <input id="domain" formControlName="domain" type="text" placeholder="Domain" />
       <div *ngIf="doctorForm.get('domain')?.invalid && doctorForm.get('domain')?.touched">
         <div *ngIf="doctorForm.get('domain')?.errors?.['required']">You must write the domain</div>
-        <div *ngIf="doctorForm.get('domain')?.errors?.['minlength']">You must write at least 10 chars</div>
+        <div *ngIf="doctorForm.get('domain')?.errors?.['minlength']">You must write at least 2 chars</div>
       </div>
     </div>
     <button type="submit" [disabled]="doctorForm.invalid">Save</button>

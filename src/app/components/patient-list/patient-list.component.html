@@ -1,12 +1,14 @@
-<div class="search-container">
-    <!-- <label for="search">Search:</label> -->
-    <div class="search-input">
-      <mat-icon>search</mat-icon>
-      <input appClearInput type="text" id="search" [(ngModel)]="search" (input)="filterPatients()" placeholder="Type a name..." >
-    </div>
-  </div>
 <div class="patient-list">
-    <app-add-dialog-patient></app-add-dialog-patient>
+   <app-add-dialog-patient></app-add-dialog-patient>
+  <br><br>
+    <div class="search-container">
+      <div class="search-input">
+        <mat-icon>search</mat-icon>
+        <input appClearInput type="text" id="search" [(ngModel)]="search" (input)="filterPatients()" placeholder="Type a name..." >
+      </div>
+    </div>
+ 
+  
     <div class="table-container">
       <table mat-table [dataSource]="filteredPatients" class="mat-elevation-z8">
         <ng-container matColumnDef="id">
@@ -44,3 +46,4 @@
       </table>
     </div>
   </div>
+  

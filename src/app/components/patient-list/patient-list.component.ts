@@ -1,36 +1,56 @@
-
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { PatientService } from '../../services/patient.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Patient } from '../../models/patient';
+import { PatientService } from '../../services/patient.service';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSortModule } from '@angular/material/sort';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { UpdatePatientComponent } from '../patient/update-patient/update-patient.component';
-import { AddPatientComponent } from '../patient/add-patient/add-patient.component';
-import { Route, Router } from '@angular/router';
-import { AddDialogPatientComponent } from '../patient/add-dialog-patient/add-dialog-patient.component';
-import { FormsModule, NgModel, ReactiveFormsModule } from '@angular/forms';
+import { AddButtunComponent } from '../turn/add/add-buttun/add-buttun.component';
+import { Subscription } from 'rxjs';
+import { AddDialogPatientComponent } from "../patient/add-dialog-patient/add-dialog-patient.component";
+
 @Component({
-  selector: 'app-patients-list',
+  selector: 'app-patient-list',
   standalone: true,
-  templateUrl: './patients-list.component.html',
-  imports: [CommonModule, MatTableModule, MatIconModule, MatButtonModule, MatSortModule,UpdatePatientComponent,AddPatientComponent,AddDialogPatientComponent,AddPatientComponent,ReactiveFormsModule,FormsModule,AddDialogPatientComponent,FormsModule,ReactiveFormsModule],
-  styleUrls: ['./patients-list.component.css'],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatIconModule,
+    MatButtonModule,
+    MatSortModule,
+    FormsModule,
+    UpdatePatientComponent,
+    AddButtunComponent,
+    AddDialogPatientComponent
+],
+  templateUrl: './patient-list.component.html',
+  styleUrls: ['./patient-list.component.css']
 })
-export class PatientsListComponent implements OnInit {
+export class PatientListComponent implements OnInit, OnDestroy {
   public patientList: Patient[] = [];
-  public displayedColumns: string[] = ['id','firstName', 'lastName', 'age', 'actions'];
+  public displayedColumns: string[] = ['id', 'firstName', 'lastName', 'age', 'actions'];
   public add: boolean = false;
   public search: string = "";
   public filteredPatients: Patient[] = [];
+  private patientUpdateSubscription!: Subscription;
 
-  constructor(private patientService: PatientService,private router:Router) {}
+  constructor(private patientService: PatientService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadPatients();
+    this.patientUpdateSubscription = this.patientService.getPatientUpdateListener().subscribe(() => {
+      this.loadPatients();
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.patientUpdateSubscription) {
+      this.patientUpdateSubscription.unsubscribe();
+    }
   }
 
   loadPatients(): void {
@@ -64,8 +84,9 @@ export class PatientsListComponent implements OnInit {
       }
     });
   }
-  navigateToDeletePatient(id:number){
-    this.router.navigate([`/delete/${id}`])
+
+  navigateToDeletePatient(id: number): void {
+    this.router.navigate([`/delete-patient/${id}`]);
   }
 
   deletePatient(patient: Patient): void {
@@ -84,4 +105,3 @@ export class PatientsListComponent implements OnInit {
     }
   }
 }
-

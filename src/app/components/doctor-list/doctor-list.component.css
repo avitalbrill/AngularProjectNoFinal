@@ -1,0 +1,73 @@
+.doctor-list {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center; 
+}
+
+th {
+  background-color: #4CAF50;
+  color: black;
+  font-weight: bold;
+  text-align: center; 
+}
+
+tr:hover {
+  background-color: #f2f2f2;
+}
+
+button.mat-icon-button {
+  margin: 0 4px;
+}
+ 
+/* סגנונות עבור מיכל הטבלה */
+.table-container {
+  max-height: 70vh; 
+  overflow-y: auto; 
+  margin-top: 20px;
+  margin-left: 120px;
+  /* border: 1px solid #e0e0e0; */
+  border-radius: 4px;
+  max-width: 80vw;
+}
+
+/* סגנונות נוספים לטבלה */
+.mat-elevation-z8 {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* יישור סגנונות בתאים ובכותרות */
+.mat-header-cell, .mat-cell {
+   padding: 20px;
+  text-align: right; }
+  .search-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .search-container label {
+    margin-right: 10px;
+    font-weight: bold;
+  }
+  
+  .search-container input[type="text"] {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-width: 250px;
+  }

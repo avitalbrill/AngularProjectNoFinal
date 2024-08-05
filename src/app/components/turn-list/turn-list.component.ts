@@ -1,48 +1,70 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSortModule } from '@angular/material/sort';
+import { UpdateTurnComponent } from '../turn/update-turn/update-turn.component';
 import { Turn } from '../../models/turn';
 import { TurnService } from '../../services/turn.service';
 import { DoctorService } from '../../services/doctor.service';
 import { PatientService } from '../../services/patient.service';
 import { Doctor } from '../../models/doctor';
 import { Patient } from '../../models/patient';
-import { UpdateTurnComponent } from '../turn/update-turn/update-turn.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { AddDialogTurnComponent } from '../turn/add-dialog-turn/add-dialog-turn.component';
+import { AddButtunComponent } from '../turn/add/add-buttun/add-buttun.component';
+import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-turns-list',
+  selector: 'app-turn-list',
   standalone: true,
-  imports: [CommonModule,MatIconModule,MatTableModule,MatButtonModule,UpdateTurnComponent,ReactiveFormsModule,AddDialogTurnComponent],
-  templateUrl: './turns-list.component.html',
-  styleUrl: './turns-list.component.css'
+  imports: [
+    CommonModule,
+    UpdateTurnComponent,
+    MatIconModule,
+    MatTableModule,
+    MatButtonModule,
+    AddButtunComponent,
+  ],
+  templateUrl: './turn-list.component.html',
+  styleUrls: ['./turn-list.component.css']
 })
-export class TurnsListComponent implements OnInit{
-
-  turn!:Turn
-  public turnList:Turn[]=[];
-  public displayedColumns: string[] = ['date', 'hour','treatmentDuration', 'doctorName','patientName', 'actions'];
+export class TurnListComponent implements OnInit, OnDestroy {
+  public turnList: Turn[] = [];
+  public displayedColumns: string[] = ['id', 'date', 'hour', 'treatmentDuration', 'doctorName', 'patientName', 'actions'];
   public add: boolean = false;
-  flag!:boolean
+  flag!: boolean;
   doctorList: Doctor[] = [];
   patientList: Patient[] = [];
-  doctorMap: Map<number| undefined, Doctor> = new Map();
+  doctorMap: Map<number | undefined, Doctor> = new Map();
   patientMap: Map<number, Patient> = new Map();
+  private turnUpdateSubscription!: Subscription;
 
-  constructor(private turnService:TurnService, private doctorService: DoctorService,
-    private patientService: PatientService  ){}
+  constructor(
+    private turnService: TurnService,
+    private doctorService: DoctorService,
+    private patientService: PatientService
+  ) { }
 
+  ngOnInit(): void {
+    this.loadTurns();
+    this.loadDoctors();
+    this.loadPatients();
+    this.turnUpdateSubscription = this.turnService.getTurnUpdateListener().subscribe(() => {
+      this.loadTurns();
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.turnUpdateSubscription) {
+      this.turnUpdateSubscription.unsubscribe();
+    }
+  }
 
   loadTurns(): void {
     this.turnService.getAllTurns().subscribe({
       next: (res) => {
         this.turnList = res;
-        console.log("turn",this.turnList);
-        
+        console.log("turnList", this.turnList);
       },
       error: (err) => {
         console.error('Failed to fetch turns:', err);
@@ -71,11 +93,6 @@ export class TurnsListComponent implements OnInit{
       }
     });
   }
-  ngOnInit(): void {
-    this.loadTurns();
-    this.loadDoctors();
-    this.loadPatients();
-  }
 
   getDoctorName(doctorId: number): string {
     const doctor = this.doctorMap.get(doctorId);
@@ -87,14 +104,9 @@ export class TurnsListComponent implements OnInit{
     return patient ? `${patient.firstName} ${patient.lastName}` : '';
   }
 
-  showPost(){
-    this.flag=true
+  showPost() {
+    this.flag = true;
   }
-
-  // updateClick(turn : any){
-  //   console.log("update Turn");
-  //  this.turnService.updateTurn(turn.id,turn);
-  // }
 
   addTurn(): void {
     this.add = true;
@@ -104,7 +116,7 @@ export class TurnsListComponent implements OnInit{
   saveEditTurn(turn: Turn): void {
     this.turnService.updateTurn(turn.id!, turn).subscribe({
       next: () => {
-        console.log("turn updated successfully");
+        console.log("Turn updated successfully");
         this.loadTurns();
       },
       error: (err) => {
@@ -114,7 +126,7 @@ export class TurnsListComponent implements OnInit{
   }
 
   deleteTurn(turn: Turn): void {
-    const confirmation = confirm(`Are you sure you want to delete ${turn.date} ?`);
+    const confirmation = confirm(`Are you sure you want to delete ${turn.date}?`);
     if (confirmation) {
       this.turnService.deleteTurn(turn.id!).subscribe({
         next: () => {
@@ -128,4 +140,3 @@ export class TurnsListComponent implements OnInit{
     }
   }
 }
-

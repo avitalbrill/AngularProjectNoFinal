@@ -1,0 +1,57 @@
+   <div class="turn-list">
+    <app-add-buttun></app-add-buttun>  
+    <div class="table-container">
+      <table mat-table [dataSource]="turnList" class="mat-elevation-z8">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>  Id </th>
+          <td mat-cell *matCellDef="let turn"> {{ turn.id }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef >  Date </th>
+          <td mat-cell *matCellDef="let turn" > {{ turn.date}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="hour">
+          <th mat-header-cell *matHeaderCellDef> Hour </th>
+          <td mat-cell *matCellDef="let turn"> {{ turn.hour }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="treatmentDuration">
+          <th mat-header-cell *matHeaderCellDef> Treatment Duration </th>
+          <td mat-cell *matCellDef="let turn"> {{ turn.treatmentDuration }} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="doctorName">
+          <th mat-header-cell *matHeaderCellDef> Doctor Name </th>
+          <!-- <td mat-cell *matCellDef="let turn"> {{ turn.doctorId}} </td> -->
+          <td mat-cell *matCellDef="let turn">
+            {{ getDoctorName(turn.doctorId) }}
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="patientName">
+          <th mat-header-cell *matHeaderCellDef> Patient Name </th>
+          <!-- <td mat-cell *matCellDef="let turn"> {{ turn.patientId}} </td> -->
+          <td mat-cell *matCellDef="let turn">
+            {{ getPatientName(turn.patientId)}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let turn">
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <app-update-turn [turn]="turn" (turnSave)="saveEditTurn($event)"></app-update-turn>
+            <button mat-icon-button color="warn" (click)="deleteTurn(turn)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+  

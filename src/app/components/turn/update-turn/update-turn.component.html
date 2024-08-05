@@ -1,69 +1,52 @@
-<button mat-icon-button color="accent" (click)="edit()" class="icon-button">
-  <mat-icon>edit</mat-icon>
-</button>
-<div *ngIf="update">
+   <button mat-icon-button color="accent" (click)="edit()">
+    <mat-icon>edit</mat-icon>
+  </button>
+  <div *ngIf="update">
 
- <form [formGroup]="turnForm" (ngSubmit)="updateClick()">
-  <div class="input">
-    <input formControlName="date" type="date" placeholder="Date" />
-    <div *ngIf="turnForm.get('date')?.invalid && turnForm.get('date')?.touched">
-      <div *ngIf="turnForm.get('date')?.errors?.['required']">Date is required.</div>
-      <div *ngIf="turnForm.get('date')?.errors?.['maxlength']">Max length is 50 characters.</div>
+   <form [formGroup]="turnForm" (ngSubmit)="updateClick()">
+    <div class="input">
+      <label for="date">date:</label>
+      <input formControlName="date" type="date" placeholder="Date" />
+      <div *ngIf="turnForm.get('date')?.invalid && turnForm.get('date')?.touched">
+        <div *ngIf="turnForm.get('date')?.errors?.['required']">Date is required.</div>
+        <div *ngIf="turnForm.get('date')?.errors?.['maxlength']">Max length is 50 characters.</div>
+      </div>
     </div>
-  </div>
-  <div class="input">
-    <input formControlName="hour" type="number" placeholder="Hour" />
-    <div *ngIf="turnForm.get('hour')?.invalid && turnForm.get('hour')?.touched">
-      <div *ngIf="turnForm.get('hour')?.errors?.['required']">Hour is required.</div>
-    </div>
-  </div>
-  <div class="input">
-    <input formControlName="treatmentDuration" type="number" placeholder="Treatment Duration" />
-    <div *ngIf="turnForm.get('treatmentDuration')?.invalid && turnForm.get('treatmentDuration')?.touched">
-      <div *ngIf="turnForm.get('treatmentDuration')?.errors?.['required']">Treatment Duration is required.</div>
-    </div>
-  </div>
-  <div class="input">
-    <input formControlName="doctorId" type="number" placeholder="doctorId" />
-    <div *ngIf="turnForm.get('doctorId')?.invalid && turnForm.get('doctorId')?.touched">
-      <div *ngIf="turnForm.get('doctorId')?.errors?.['required']">Treatment Duration is required.</div>
-    </div>
-  </div>
-  <div class="input">
-    <input formControlName="patientId" type="number" placeholder="patientId" />
-    <div *ngIf="turnForm.get('patientId')?.invalid && turnForm.get('patientId')?.touched">
-      <div *ngIf="turnForm.get('patientId')?.errors?.['required']">Treatment Duration is required.</div>
-    </div>
-  </div>
-  <!-- <div class="input">
-    <mat-form-field appearance="fill">
-      <mat-label>Select Doctor</mat-label>
-      <mat-select formControlName="doctorId" (openedChange)="filterDoctors('')" [value]="turn?.doctorId">
-        <mat-option>
-          <input matInput placeholder="Filter doctors" [(ngModel)]="doctorFilter" (ngModelChange)="filterDoctors($event)" />
-        </mat-option>
-        <mat-option *ngFor="let doctor of filteredDoctors" [value]="doctor.id">
-          {{ doctor.firstName }} {{ doctor.lastName }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-  <div class="input">
-    <mat-form-field appearance="fill">
-      <mat-label>Select Patient</mat-label>
-      <mat-select formControlName="patientId" (openedChange)="filterPatients('')" [value]="turn?.patientId">
-        <mat-option>
-          <input matInput placeholder="Filter patients" [(ngModel)]="patientFilter" (ngModelChange)="filterPatients($event)" />
-        </mat-option>
-        <mat-option *ngFor="let patient of filteredPatients" [value]="patient.id">
-          {{ patient.firstName }} {{ patient.lastName }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field> -->
-  <!-- </div> -->
-  <button type="submit" [disabled]="turnForm.invalid">Save</button>
-</form>
-</div>
 
+    <div class="input">
+      <label for="hour">hour:</label>
+      <input formControlName="hour" type="number" placeholder="Hour" />
+      <div *ngIf="turnForm.get('hour')?.invalid && turnForm.get('hour')?.touched">
+        <div *ngIf="turnForm.get('hour')?.errors?.['required']">Hour is required.</div>
+      </div>
+    </div>
 
- 
+    <div class="input">
+      <label for="treatmentDuration">treatmentDuration:</label>
+      <input formControlName="treatmentDuration" type="number" placeholder="Treatment Duration" />
+      <div *ngIf="turnForm.get('treatmentDuration')?.invalid && turnForm.get('treatmentDuration')?.touched">
+        <div *ngIf="turnForm.get('treatmentDuration')?.errors?.['required']">Treatment Duration is required.</div>
+      </div>
+    </div>
+
+    <div class="input">
+      <label for="doctorId">doctorId:</label>
+      <input formControlName="doctorId" type="number" placeholder="doctorId" />
+      <div *ngIf="turnForm.get('doctorId')?.invalid && turnForm.get('doctorId')?.touched">
+        <div *ngIf="turnForm.get('doctorId')?.errors?.['required']">Treatment Duration is required.</div>
+      </div>
+    </div>
+
+    <div class="input">
+      <label for="patientId">patientId:</label>
+      <input formControlName="patientId" type="number" placeholder="patientId" />
+      <div *ngIf="turnForm.get('patientId')?.invalid && turnForm.get('patientId')?.touched">
+        <div *ngIf="turnForm.get('patientId')?.errors?.['required']">Treatment Duration is required.</div>
+      </div>
+    </div>
+
+    
+   
+    <button type="submit" [disabled]="turnForm.invalid">Save</button>
+  </form>
+  </div>

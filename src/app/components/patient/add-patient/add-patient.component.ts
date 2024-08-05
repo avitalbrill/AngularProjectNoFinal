@@ -6,8 +6,7 @@ import {
   MatDialogTitle,
   MatDialogContent,
   MatDialogActions,
-  MatDialogClose,
-  
+  MatDialogClose, 
 } from '@angular/material/dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {FormControl, FormGroup, FormsModule, Validators} from '@angular/forms';
@@ -18,11 +17,6 @@ import { Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Patient } from '../../../models/patient';
 import { PatientService } from '../../../services/patient.service';
-
-
-//import { DialogData } from '../update-doctor-dialog/update-doctor-dialog.component';
-
-
 
 export interface DialogData {
   firstName: string;

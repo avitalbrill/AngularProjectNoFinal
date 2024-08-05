@@ -1,46 +1,57 @@
+/* עיצוב הקונטיינר של הטופס */
 form {
   display: flex;
-  flex-direction: column;
-  max-width: 200px; /* Adjust the form width as needed */
-  margin: auto;
+  flex-direction: column; /* יישור אנכי של השדות */
+  max-width: 300px; /* גודל מקסימלי קטן יותר */
+  margin: auto; /* מרכז את הקונטיינר בעמוד */
+  padding: 12px; /* ריפוד קטן יותר */
+  border: 1px solid #ddd;
+  border-radius: 6px; /* פינה עגולה קטנה יותר */
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1); /* צל קטן יותר */
+  background-color: #ffffff;
 }
 
-label {
-  margin-top: 5px; /* Reduce top margin for labels */
+/* עיצוב לכל שדה קלט */
+.input {
+  margin-bottom: 12px; /* רווח קטן יותר בין שדות הקלט */
 }
 
-input {
-  margin-bottom: 5px; /* Reduce bottom margin for input fields */
-  padding: 8px;
-  font-size: 14px;
-  width: 100%; /* Make input fields full width */
-  box-sizing: border-box; /* Ensure padding is included in width */
+.input label {
+  display: block; /* תצוגה בלוקית של התווית */
+  font-weight: bold;
+  margin-bottom: 4px; /* רווח קטן יותר מתחת לתווית */
 }
 
+.input input {
+  width: 100%; /* רוחב מלא של השדה */
+  padding: 4px; /* ריפוד קטן יותר */
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.input div {
+  font-size: 0.75em; /* גודל פונט קטן יותר */
+  color: #d32f2f; /* צבע אדום עבור הודעות שגיאה */
+  margin-top: 2px; /* רווח קטן יותר מעל הודעת השגיאה */
+}
+
+/* עיצוב כפתור השמירה */
 button[type="submit"] {
-  margin-top: 10px; /* Reduce top margin for the submit button */
-  padding: 10px;
-  font-size: 16px;
-  background-color: #007bff;
+  background-color: #1976d2;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
+  padding: 6px 12px; /* ריפוד קטן יותר */
+  font-size: 0.75em; /* גודל פונט קטן יותר */
   cursor: pointer;
-  width: 100%; /* Make button full width */
+  transition: background-color 0.3s;
 }
 
 button[type="submit"]:hover {
-  background-color: #0056b3;
+  background-color: #155a8a; /* שינוי צבע בזמן ריחוף */
 }
 
-.icon-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-}
-
-.icon-button mat-icon {
-  font-size: 24px;
-  color: black; /* Adjust the color as needed */
+button[type="submit"]:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
 }

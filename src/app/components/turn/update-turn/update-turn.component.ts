@@ -77,6 +77,7 @@ export class UpdateTurnComponent implements OnInit {
     });
   }
 
+  
   filterDoctors(filterValue: string): void {
     this.filteredDoctors = this.doctorList.filter(doctor =>
       doctor.firstName.toLowerCase().includes(filterValue.toLowerCase()) ||
@@ -92,17 +93,14 @@ export class UpdateTurnComponent implements OnInit {
   }
 
   updateClick() {
-    console.log("updateClick",this.turnForm.value);
-    
     if (this.turnForm.valid) {
       const updatedTurn = {
         ...this.turn,
         ...this.turnForm.value
       };
       console.log("updateClick2",updatedTurn);
-
       this.turnSave.emit(updatedTurn);
-      // this.snackBar.open('Turn updated successfully!', 'Close', { duration: 2000 });
+      this.snackBar.open('Turn updated successfully!', 'Close', { duration: 2000 });
     }
   }
 
@@ -114,4 +112,5 @@ export class UpdateTurnComponent implements OnInit {
     console.log("update2",this.update);
 
   }
+  
 }

@@ -2,14 +2,16 @@ import { Component, OnInit, Output ,EventEmitter} from '@angular/core';
 import { DoctorService } from '../../../services/doctor.service';
 import { ActivatedRoute } from '@angular/router';
 import { Doctor } from '../../../models/doctor';
-import { DoctorsListComponent } from '../../doctors-list/doctors-list.component';
+
 import { CommonModule } from '@angular/common';
+import { DoctorListComponent } from '../../doctor-list/doctor-list.component';
+
 
 
 @Component({
   selector: 'app-delete-doctor',
   standalone: true,
-  imports: [DoctorsListComponent,CommonModule],
+  imports: [DoctorListComponent,CommonModule],
   templateUrl: './delete-doctor.component.html',
   styleUrl: './delete-doctor.component.css'
 })

@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TurnsListComponent } from './turns-list.component';
+import { TurnListComponent } from './turn-list.component';
 
-describe('TurnsListComponent', () => {
-  let component: TurnsListComponent;
-  let fixture: ComponentFixture<TurnsListComponent>;
+describe('TurnListComponent', () => {
+  let component: TurnListComponent;
+  let fixture: ComponentFixture<TurnListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TurnsListComponent]
+      imports: [TurnListComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(TurnsListComponent);
+    fixture = TestBed.createComponent(TurnListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

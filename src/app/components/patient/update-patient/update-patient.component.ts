@@ -8,6 +8,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSortModule } from '@angular/material/sort';
 import { PatientService } from '../../../services/patient.service';
 import { Patient } from '../../../models/patient';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-update-patient',
@@ -24,14 +25,16 @@ export class UpdatePatientComponent implements OnInit {
   @Input() patient!: Patient;
   @Output() patientSave: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(private route: ActivatedRoute, private patientService: PatientService) {}
+  constructor(private route: ActivatedRoute, private patientService: PatientService,private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.patientForm = new FormGroup({
-      tz: new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
-      firstName: new FormControl('', Validators.required),
-      lastName: new FormControl('', Validators.required),
-      age: new FormControl('', [Validators.required, Validators.minLength(1)])
+      firstName: new FormControl(this.patient?.firstName || '', Validators.required),
+      lastName: new FormControl(this.patient?.lastName || '', Validators.required),
+      age: new FormControl(this.patient?.age || '', [
+        Validators.required, 
+        Validators.minLength(1)
+      ])
     });
   }
 
@@ -46,7 +49,7 @@ export class UpdatePatientComponent implements OnInit {
     this.patientService.getPatientById(id).subscribe({
       next: (res: Patient) => {
         this.patientForm.setValue({
-          tz: res.tz,
+          // tz: res.tz,
           firstName: res.firstName,
           lastName: res.lastName,
           age: res.age
@@ -59,24 +62,22 @@ export class UpdatePatientComponent implements OnInit {
   save(): void {
     if (this.patientForm.valid) {
       const updatePatient: Patient = {
-        id: this.id,
+        ...this.patient,
         ...this.patientForm.value
       };
-      this.patientService.updatePatient(this.id, updatePatient).subscribe({
+      this.patientService.updatePatient(this.patient.id, updatePatient).subscribe({
         next: () => {
           console.log('Patient updated successfully');
           this.patientSave.emit();
           this.patientForm.reset(); // Clear the form after saving
           this.formVisible = false; // Close the form after saving
           // this.reloadPage(); // Reload the page to see the updated results
+          this.snackBar.open('Patient updated successfully!', 'Close', { duration: 2000 });
         },
         error: (err) => console.error(err)
       });
     }
   }
 
-  reloadPage() {
-    // פעולה לטעינת הדף מחדש
-    // location.reload();
-  }
+
 }
